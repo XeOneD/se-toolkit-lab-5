@@ -34,132 +34,183 @@
 
 ## What is `.env.docker.secret`
 
+`.env.docker.secret` is an [`.env` file](./environments.md#env-file) that stores [environment variables](./environments.md#environment-variable) for [`Docker Compose`](./docker-compose.md#what-is-docker-compose). The values are substituted into [`docker-compose.yml`](../docker-compose.yml) when running commands with the `--env-file` flag (e.g., `docker compose --env-file .env.docker.secret up --build`).
+
 Default values: [`.env.docker.example`](../.env.docker.example)
 
-<!-- TOD improve description -->
-
-> It was added to [`.gitignore`](../../.gitignore) because you may specify there
-> [secrets](../../wiki/environments.md#secrets) such as the API key or the [address of your VM](../../wiki/vm.md#your-vm-ip-address).
+> It was added to [`.gitignore`](./git.md#gitignore) because you may specify there
+> [secrets](./environments.md#secrets) such as the [API key](#api_key) or the [address of your VM](./vm.md#your-vm-ip-address).
 
 > [!TIP]
 > No edits are needed for local development.
-> The default values in [`.env.docker.example`](../../.env.docker.example) work out of the box.
-
-<!-- TODO values are used for deployment using --env-file. replaces values in docker-compose.yml -->
-<!-- TODO explain each variable -->
-<!-- TODO add links to computer-networks#0000 for 0.0.0.0 
-and links for 127.0.0.1 -->
+> The default values in [`.env.docker.example`](../.env.docker.example) work out of the box.
 
 ## `app`
 
+Variables for the backend [web server](./web-development.md#web-server) [container](./docker.md#container).
+
 ### `APP_NAME`
+
+The display name of the application.
 
 Default: `"Learning Management Service"`
 
 ### `APP_DEBUG`
 
+Enables debug mode in the [web server](./web-development.md#web-server). When `true`, the server returns detailed error messages.
+
 Default: `false`
 
 ### `APP_RELOAD`
+
+Enables auto-reload. When `true`, the [web server](./web-development.md#web-server) restarts automatically when source files change.
 
 Default: `false`
 
 ### `APP_CONTAINER_ADDRESS`
 
+The [IP address](./computer-networks.md#ip-address) the app [listens on](./computer-networks.md#listen-on-a-port) inside the [container](./docker.md#container). [`0.0.0.0`](./computer-networks.md#0000) means all network interfaces.
+
 Default: `0.0.0.0`
 
 ### `APP_CONTAINER_PORT`
+
+The [port number](./computer-networks.md#port-number) the app [listens on](./computer-networks.md#listen-on-a-port) inside the [container](./docker.md#container).
 
 Default: `8000`
 
 ### `APP_HOST_ADDRESS`
 
+The [IP address](./computer-networks.md#ip-address) exposed on the [host](./computer-networks.md#host). [`127.0.0.1`](./computer-networks.md#127001) restricts access to the local machine only.
+
 Default: `127.0.0.1`
 
 ### `APP_HOST_PORT`
+
+The [port number](./computer-networks.md#port-number) exposed on the [host](./computer-networks.md#host) for accessing the app.
 
 Default: `42001`
 
 ### `APP_ENABLE_INTERACTIONS`
 
-Feature flag
+A [feature flag](./web-development.md#feature-flag) for enabling the `/interactions` endpoint.
 
 Default: `true`
 
 ### `APP_ENABLE_LEARNERS`
 
-Feature flag for enabling the `/learners` endpoint.
+A [feature flag](./web-development.md#feature-flag) for enabling the `/learners` endpoint.
 
 Default: `true`
 
 ### `API_KEY`
 
+The secret key used to authorize [API](./web-development.md#api) requests. See [API key authentication](./security.md#api-key-authentication).
+
 Default: `my-secret-api-key`
 
 ## `postgres`
 
+Variables for [`PostgreSQL`](./database.md#postgresql) [container](./docker.md#container).
+
 ### `POSTGRES_DB`
+
+The name of the [database](./database.md#what-is-a-database) created on the first startup.
 
 Default: `db-lab-4`
 
 ### `POSTGRES_USER`
 
+The username for the [`PostgreSQL`](./database.md#postgresql) database.
+
 Default: `postgres`
 
 ### `POSTGRES_PASSWORD`
+
+The password for the `PostgreSQL` database.
 
 Default: `postgres`
 
 ### `POSTGRES_HOST_ADDRESS`
 
+The [IP address](./computer-networks.md#ip-address) exposed on the [host](./computer-networks.md#host). [`127.0.0.1`](./computer-networks.md#127001) restricts access to the local machine only.
+
 Default: `127.0.0.1`
 
 ### `POSTGRES_HOST_PORT`
+
+The [port number](./computer-networks.md#port-number) exposed on the [host](./computer-networks.md#host) for accessing `PostgreSQL`.
 
 Default: `42004`
 
 ## `pgadmin`
 
+Variables for [`pgAdmin`](./pgadmin.md#what-is-pgadmin) [container](./docker.md#container).
+
 ### `PGADMIN_EMAIL`
+
+The email used to log in to [`pgAdmin`](./pgadmin.md#what-is-pgadmin).
 
 Default: `admin@example.com`
 
 ### `PGADMIN_PASSWORD`
 
+The password used to log in to `pgAdmin`.
+
 Default: `admin`
 
 ### `PGADMIN_HOST_ADDRESS`
+
+The [IP address](./computer-networks.md#ip-address) exposed on the [host](./computer-networks.md#host). [`0.0.0.0`](./computer-networks.md#0000) accepts connections from any network interface.
 
 Default: `0.0.0.0`
 
 ### `PGADMIN_HOST_PORT`
 
+The [port number](./computer-networks.md#port-number) exposed on the [host](./computer-networks.md#host) for accessing `pgAdmin`.
+
 Default: `42003`
 
 ## `caddy`
 
+Variables for [`Caddy`](./caddy.md#what-is-caddy) [container](./docker.md#container).
+
 ### `CADDY_CONTAINER_PORT`
+
+The [port number](./computer-networks.md#port-number) [`Caddy`](./caddy.md#what-is-caddy) [listens on](./computer-networks.md#listen-on-a-port) inside the [container](./docker.md#container).
 
 Default: `80`
 
 ### `CADDY_HOST_ADDRESS`
 
+The [IP address](./computer-networks.md#ip-address) exposed on the [host](./computer-networks.md#host). [`0.0.0.0`](./computer-networks.md#0000) accepts connections from any network interface.
+
 Default: `0.0.0.0`
 
 ### `CADDY_HOST_PORT`
+
+The [port number](./computer-networks.md#port-number) exposed on the [host](./computer-networks.md#host) for accessing `Caddy`.
 
 Default: `42002`
 
 ## Constants
 
+Values that should not be changed. They are defined here for convenient referencing in [`docker-compose.yml`](../docker-compose.yml).
+
 ### `CONST_POSTGRESQL_SERVICE_NAME`
+
+The [`Docker Compose` service name](./docker-compose.md#service-name) for [`PostgreSQL`](./database.md#postgresql). Other [services](./docker-compose.md#service) use this name to connect to the database via [`Docker Compose` networking](./docker-compose.md#docker-compose-networking).
 
 Default: `postgres`
 
 ### `CONST_POSTGRESQL_SERVER_NAME`
 
+The display name for the `PostgreSQL` server in [`pgAdmin`](./pgadmin.md#what-is-pgadmin).
+
 Default: `postgres-lab-4`
 
 ### `CONST_POSTGRESQL_DEFAULT_PORT`
+
+The default [port number](./computer-networks.md#port-number) `PostgreSQL` [listens on](./computer-networks.md#listen-on-a-port) inside the [container](./docker.md#container).
 
 Default: `5432`
